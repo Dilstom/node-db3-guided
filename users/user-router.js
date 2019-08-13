@@ -19,7 +19,8 @@ router.get('/:id', async (req, res) => {
  const { id } = req.params;
 
  try {
-  const [user] = await Users.findById({ id }); //  object in arr
+  const user = await Users.findById(id); //  object in arr
+  console.log(user);
   //   const user = await Users.findById({ id }); //  object in arr // return first() in db model
 
   if (user) {
@@ -67,9 +68,7 @@ router.delete('/:id', async (req, res) => {
  const { id } = req.params;
 
  try {
-  const count = await db('users')
-   .where({ id })
-   .del();
+  const count = await Users.remove(id);
 
   if (count) {
    res.json({ removed: count });

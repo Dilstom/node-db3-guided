@@ -6,7 +6,7 @@ module.exports = {
  findPosts,
  add,
  //  updateUser,
- //  remove
+ remove,
 };
 
 function find() {
@@ -14,22 +14,26 @@ function find() {
 }
 
 function findById(id) {
- return db('users').where({ id });
- //   .first(); // if not destructured
+ return db('users')
+  .where({ id })
+  .first(); // if not destructured
 }
 
 function findPosts(user_id) {
+ //  console.log({ user_id: user_id });
  return db('posts as p')
   .join('users as u', 'u.id', 'p.user_id')
   .select('p.id', 'u.username', 'p.contents')
   .where({ user_id });
 }
 
-// function add(user) {
-//  return db('users').insert(user);
-//  return findById(id);
-// }
 async function add(user) {
  const [id] = await db('users').insert(user);
  return findById(id);
+}
+
+function remove(id) {
+ return db('users')
+  .where({ id })
+  .del();
 }

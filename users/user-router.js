@@ -50,9 +50,7 @@ router.put('/:id', async (req, res) => {
  const changes = req.body;
 
  try {
-  const count = await db('users')
-   .where({ id })
-   .update(changes);
+  const count = await Users.updateUser(id, changes);
 
   if (count) {
    res.json({ update: count });
